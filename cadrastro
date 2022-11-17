@@ -1,0 +1,108 @@
+class Aluno {
+    matricula;
+    nome;
+    nota = null;
+    constructor(matricula, nome) {
+        this.matricula = matricula;
+        this.nome = nome;
+    }
+    alteraNota(nota) {
+        this.nota = nota;
+    }
+}
+
+class Turma {
+    alunos = new Array();
+    ultMatricula = 0;
+    constructor() {}
+    cadastraAluno(nome) {
+        this.alunos.push(new Aluno(++this.ultMatricula,nome))
+    }
+    removeAluno(nome) {
+        let posicao = this.localizaAluno(nome);
+        if(posicao > -1) {
+            this.alunos.splice(posicao,1);
+        } else {
+            console.log("Aluno " + nome + " não encontrado.")
+        }
+    }
+    localizaAluno(nome) {
+        for(let i = 0; i < this.alunos.length; i++) {
+            if(this.alunos[i].nome == nome) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    alteraNota(nome, nota) {
+        let posicao = this.localizaAluno(nome);
+        if(posicao > -1) {
+            this.alunos[posicao].alteraNota(nota);
+        } else {
+            console.log("Aluno " + nome + " não encontrado.")
+        }
+
+    }
+    media(){
+    let soma = 0;
+    for(let linha of this.alunos)
+    {
+    soma += linha.nota;
+    }
+    return soma / this.alunos.length;
+    }
+}
+
+html {
+    background-image: linear-gradient( #202124, #000);
+    background-attachment: fixed;
+    height: 100%;
+}
+body {
+    margin: 10%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 120%;
+    color: #fff;
+}
+
+let manha = new Turma();
+manha.cadastraAluno("Rafaela");
+manha.cadastraAluno("Fernanda");
+manha.cadastraAluno("Nayara");
+
+manha.alteraNota("Rafaela",4.8);
+manha.alteraNota("Fernanda",7);
+manha.alteraNota("Nayara",6.99);
+
+console.log(manha.media());
+console.log(manha);
+
+var paragrafo = document.createElement("p");
+paragrafo.innerHTML = "Alo mundo";
+paragrafo.style = "color: red";
+var alvo = document.getElementsByTagName("body")[0];
+alvo.appendChild(paragrafo);
+
+
+
+// imprime o texto seguido de 
+//  uma quebra de linha
+function imprima(texto) {
+	document.write(texto + "<br>");
+}
+
+// formata números no formato brasileiro
+function formataNumero(valor) {
+	return new Intl.NumberFormat('pt-BR', { minimumIntegerDigits: 2 }).format(valor);
+}
+
+// formata moedas no formato brasileiro
+function formataMoeda(valor) {
+	let padraoBR = Intl.NumberFormat("pt-BR", {
+		style: "currency",
+		currency: "BRL",
+	});
+	return padraoBR.format(valor);
+}
+
+
